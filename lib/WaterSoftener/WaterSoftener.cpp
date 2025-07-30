@@ -19,6 +19,11 @@ TimeSpan WaterSoftener::timeDelays[5] = {
   TimeSpan(4,0,0,0)         // Service 4 Days
 };
 
+void WaterSoftener::begin(){
+    pinMode(pinOpto, OUTPUT);
+    pinMode(pinGear, INPUT_PULLUP);
+}
+
 TimeSpan WaterSoftener::getCountdown(){
     return countdown;
 }

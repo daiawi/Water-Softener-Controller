@@ -8,6 +8,7 @@ class AppRegistry{
         // Add Custom Apps Here ... 
         BaseApp* menuApp = nullptr;
         BaseApp* countdownApp = nullptr;
+        BaseApp* diagnosticApp = nullptr;
 
         void update(bool pressed, int dir);
         void swapTo(BaseApp* newApp);

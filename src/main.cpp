@@ -10,6 +10,7 @@
 // List of Included Apps
 #include "MenuApp.h"
 #include "CountdownApp.h"
+#include "DiagnosticApp.h"
 
 // Shared Objects
 AppRegistry AppHub;
@@ -25,6 +26,7 @@ WaterSoftener softener(display, programData);
 // App Setup
 MenuApp _menuApp(display, programData, mainMenu, mainMenuSize);
 CountdownApp _countdownApp(display, programData, softener);
+DiagnosticApp _diagnosticApp(display, programData);
 
 void setup() {
   // Initialize serial communication
@@ -33,10 +35,14 @@ void setup() {
   // Attach Apps to AppHub
   AppHub.menuApp = &_menuApp;
   AppHub.countdownApp = &_countdownApp;
+  AppHub.diagnosticApp = &_diagnosticApp;
   AppHub.swapTo(AppHub.countdownApp); 
 
   // Initialize the OLED display 
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+
+  // Start Softener
+  softener.begin();
 
   // Start Encoder
   encoder.begin();

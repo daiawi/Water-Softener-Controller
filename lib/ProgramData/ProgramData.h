@@ -18,3 +18,13 @@ enum class Error{
   RTC_STOPPED,
   CHANGE_TIMEOUT
 };
+
+inline const char* errorToString(Error error_enum) {
+    switch (error_enum) {
+        case Error::NO_ERROR:               return "NONE";
+        case Error::RTC_INIT_FAILED:        return "RTC_INIT_FAIL";
+        case Error::RTC_STOPPED:            return "RTC_STOPPED";
+        case Error::CHANGE_TIMEOUT:         return "CHANGE_TIMEOUT";
+        default:     return "UNDEFINED";
+    }
+}

@@ -11,6 +11,7 @@ class WaterSoftener{
         static const char* titles[5];
         static TimeSpan timeDelays[5];
         
+        void begin();
         void update(DateTime now);      // Called To Check Naturally
         void skipWait();                // Sets Flag to Skip Wait
         TimeSpan getCountdown();

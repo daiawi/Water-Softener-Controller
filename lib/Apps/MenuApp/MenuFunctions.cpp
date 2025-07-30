@@ -28,7 +28,7 @@ static void showCountdown() {
 }
 
 static void showDiagnostic() {
-    /* implement logic */
+    AppHub.swapTo(AppHub.diagnosticApp);
 }
 
 static void runNow() {
