@@ -13,6 +13,8 @@ class CountdownApp : public BaseApp{
         void onPress() override;
     
     private:
+        void showCountdown();
+        void showError();
         WaterSoftener& softener;
 
 };

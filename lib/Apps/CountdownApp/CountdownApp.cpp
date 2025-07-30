@@ -3,13 +3,26 @@
 #include "WaterSoftener.h"
 
 extern AppRegistry AppHub;
-extern WaterSoftener softener; 
+extern Error errorStatus;
 
 void CountdownApp::init(){
     continuousRender = true;
 }
 
 void CountdownApp::render() {
+    if (errorStatus == Error::NO_ERROR) showCountdown();
+    else showError();
+}
+
+void CountdownApp::onRotate(int dir){
+    return;
+}
+
+void CountdownApp::onPress(){
+    AppHub.returnToMenu();
+}
+
+void CountdownApp::showCountdown(){
     display.clearDisplay();
     display.setTextSize(1);    // Larger text size for time
     display.setTextColor(SSD1306_WHITE);
@@ -38,10 +51,14 @@ void CountdownApp::render() {
     display.display();
 }
 
-void CountdownApp::onRotate(int dir){
-    return;
-}
-
-void CountdownApp::onPress(){
-    AppHub.returnToMenu();
+void CountdownApp::showError(){
+    display.clearDisplay();
+    display.setTextSize(2);    // Larger text size for time
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0, 0);  // Set cursor position for time
+    display.println("Error");
+    display.println("Detected");
+  
+    // Update the display
+    display.display();
 }

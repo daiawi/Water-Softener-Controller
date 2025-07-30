@@ -23,10 +23,4 @@ private:
     void performCurrentAction();
     const char* labelAt(int index);
     void reset();
-
-    // Stored Menus
-    static MenuItem mainMenuItems[3];
-    static MenuItem runOpts[3];
-    static MenuItem settingOpts[4];
-    static MenuItem stageOpts[5];
 };

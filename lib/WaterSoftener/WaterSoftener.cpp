@@ -1,5 +1,7 @@
 #include "WaterSoftener.h"
 
+extern Error errorStatus;
+
 const char* WaterSoftener::titles[5] = {
     "Fill:",
     "Brine Rinse:",
@@ -52,6 +54,7 @@ void WaterSoftener::advanceSoftener(){
     while (!hasChanged()){
         if (millis() - startTime > TIMEOUT){
             changeState = WAIT_FOR_CLOSE;
+            errorStatus = Error::CHANGE_TIMEOUT;
             break;
         }
     }

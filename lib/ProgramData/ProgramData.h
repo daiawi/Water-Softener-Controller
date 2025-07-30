@@ -16,6 +16,5 @@ enum class Error{
   NO_ERROR,
   RTC_INIT_FAILED,
   RTC_STOPPED,
-  OUT_OF_POS,
   CHANGE_TIMEOUT
 };

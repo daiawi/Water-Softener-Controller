@@ -7,7 +7,6 @@ class BaseApp {
     protected:
         Adafruit_SSD1306& display;
         eepromData& programData;
-        int encoderValue = 0;
         
     public:
         BaseApp(Adafruit_SSD1306& disp, eepromData& state)

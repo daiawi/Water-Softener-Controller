@@ -8,7 +8,6 @@
 #include "WaterSoftener.h"
 
 // List of Included Apps
-#include "BaseApp.h"
 #include "MenuApp.h"
 #include "CountdownApp.h"
 
@@ -16,6 +15,7 @@
 AppRegistry AppHub;
 Adafruit_SSD1306 display(128, 32, &Wire);
 eepromData programData;
+Error errorStatus = Error::NO_ERROR;
 RTC_DS1307 rtc;
 
 // Custom Objects
@@ -36,15 +36,14 @@ void setup() {
   AppHub.swapTo(AppHub.countdownApp); 
 
   // Initialize the OLED display 
-  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Using SSD1306_SWITCHCAPVCC
-    Serial.println("SSD1306 allocation failed"); // non fatal error
-  }
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 
   // Start Encoder
   encoder.begin();
 
-  // Start Real Time Clock
-  rtc.begin();
+  // Start Real Time Clock and Check for Errors
+  if (!rtc.begin()) errorStatus = Error::RTC_INIT_FAILED;
+  else if (!rtc.isrunning()) errorStatus = Error::RTC_STOPPED;
 
   // Load ProgramData
   programData.load();
@@ -62,6 +61,8 @@ void loop() {
   AppHub.update(pressed, dir);
 
   // Update Water Softener
-  softener.update(clock);
+  if (errorStatus == Error::NO_ERROR){
+    softener.update(clock);
+  }
 }
 

@@ -9,6 +9,7 @@
 extern AppRegistry AppHub;
 extern eepromData programData;
 extern WaterSoftener softener;
+extern Error errorStatus;
 
 static void setStage(int stage) {
     programData.stage = stage;
@@ -43,7 +44,7 @@ static void runTonight() {
 }
 
 static void clearError() {
-    /* implement logic */
+    errorStatus = Error::NO_ERROR;
 }
 
 static MenuItem runOpts[] = {
