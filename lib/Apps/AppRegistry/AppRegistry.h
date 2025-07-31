@@ -9,6 +9,7 @@ class AppRegistry{
         BaseApp* menuApp = nullptr;
         BaseApp* countdownApp = nullptr;
         BaseApp* diagnosticApp = nullptr;
+        BaseApp* rtcApp = nullptr;
 
         void update(bool pressed, int dir);
         void swapTo(BaseApp* newApp);

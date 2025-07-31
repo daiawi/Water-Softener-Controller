@@ -36,7 +36,7 @@ void CountdownApp::showCountdown(){
     display.setCursor(0, 10);  // Set cursor position for time
     display.setTextSize(2);    // Larger text size for time
     
-    char timeString[100]; 
+    char timeString[15]; 
     if (countdown.days()!=0){
         sprintf(timeString, "%02d Days", countdown.days());
     }

@@ -11,6 +11,7 @@
 #include "MenuApp.h"
 #include "CountdownApp.h"
 #include "DiagnosticApp.h"
+#include "RtcApp.h"
 
 // Shared Objects
 AppRegistry AppHub;
@@ -27,6 +28,7 @@ WaterSoftener softener(display, programData);
 MenuApp _menuApp(display, programData, mainMenu, mainMenuSize);
 CountdownApp _countdownApp(display, programData, softener);
 DiagnosticApp _diagnosticApp(display, programData);
+RtcApp _rtcApp(display, programData, rtc);
 
 void setup() {
   // Initialize serial communication
@@ -36,6 +38,7 @@ void setup() {
   AppHub.menuApp = &_menuApp;
   AppHub.countdownApp = &_countdownApp;
   AppHub.diagnosticApp = &_diagnosticApp;
+  AppHub.rtcApp = &_rtcApp;
   AppHub.swapTo(AppHub.countdownApp); 
 
   // Initialize the OLED display 

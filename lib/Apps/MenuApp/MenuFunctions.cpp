@@ -31,6 +31,10 @@ static void showDiagnostic() {
     AppHub.swapTo(AppHub.diagnosticApp);
 }
 
+static void showRtcApp(){
+    AppHub.swapTo(AppHub.rtcApp);
+}
+
 static void runNow() {
     softener.skipWait();
     AppHub.swapTo(AppHub.countdownApp);
@@ -63,8 +67,9 @@ static MenuItem stageOpts[] = {
 
 static MenuItem settingOpts[] = {
     MenuItem("Diagnostics", showDiagnostic),
-    MenuItem("Set Stage", stageOpts, MENU_COUNT(stageOpts)),
     MenuItem("Clear Error", clearError),
+    MenuItem("Set Stage", stageOpts, MENU_COUNT(stageOpts)),
+    MenuItem("Set RTC", showRtcApp),
     MenuItem("Back", nullptr)
 };
 
