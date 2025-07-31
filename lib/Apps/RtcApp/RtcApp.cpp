@@ -88,19 +88,27 @@ void RtcApp::processTimeRender(){
 
 
 void RtcApp::loadDateTime(){
-    inputDateTime = rtc.now();
+    if (rtc.isrunning()){
+        inputDateTime = rtc.now();
+    } else inputDateTime = DateTime(2025,7,31,12,0,0);
 }
 
-void RtcApp::setDateTime(){
-    if (inputDateTime.isValid()){
-        DateTime currentDateTime = rtc.now();
-        TimeSpan diff = inputDateTime - currentDateTime;
-        
-        programData.nextEvent = programData.nextEvent + diff;
-        programData.save();
+void RtcApp::setDateTime() {
+    if (!inputDateTime.isValid()) return;
 
-        rtc.adjust(inputDateTime);
+    TimeSpan timeOffset;
+
+    if (rtc.isrunning()) {
+        DateTime currentDateTime = rtc.now();
+        timeOffset = inputDateTime - currentDateTime;
+    } else {
+        timeOffset = TimeSpan(0);  // RTC not running, no offset adjustment
     }
+
+    programData.nextEvent = programData.nextEvent + timeOffset;
+    programData.save();
+
+    rtc.adjust(inputDateTime);
 }
 
 void RtcApp::adjustDateTime(int dir){

@@ -69,7 +69,7 @@ static MenuItem settingOpts[] = {
     MenuItem("Diagnostics", showDiagnostic),
     MenuItem("Clear Error", clearError),
     MenuItem("Set Stage", stageOpts, MENU_COUNT(stageOpts)),
-    MenuItem("Set RTC", showRtcApp),
+    MenuItem("Set Clock", showRtcApp),
     MenuItem("Back", nullptr)
 };
 

@@ -56,9 +56,6 @@ void setup() {
 
   // Load ProgramData
   programData.load();
-
-  // Render the initial menu
-  AppHub.currentApp->render();
 }
 
 void loop() {

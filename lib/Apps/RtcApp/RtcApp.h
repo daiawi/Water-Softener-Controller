@@ -26,7 +26,6 @@ class RtcApp : public BaseApp{
         uint8_t date_input[3];
         uint8_t time_input[3];
 
-
         // Date Input
         void processDatePress();
         void processDateRender();
