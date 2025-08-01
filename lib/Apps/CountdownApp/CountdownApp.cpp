@@ -23,10 +23,6 @@ void CountdownApp::onPress(){
 }
 
 void CountdownApp::showCountdown(){
-    display.clearDisplay();
-    display.setTextSize(1);    // Larger text size for time
-    display.setTextColor(SSD1306_WHITE);
-    display.setCursor(0, 0);  // Set cursor position for time
     display.print(softener.titles[programData.stage]);
 
     // Calculate Countdown:
@@ -46,16 +42,9 @@ void CountdownApp::showCountdown(){
     }
     
     display.print(timeString);
-
-    // Update the display
-    display.display();
 }
 
 void CountdownApp::showError(){
-    display.clearDisplay();
-    display.setTextSize(2);    // Larger text size for time
-    display.setTextColor(SSD1306_WHITE);
-    display.setCursor(0, 0);  // Set cursor position for time
     display.println("Error");
     display.println("Detected");
   

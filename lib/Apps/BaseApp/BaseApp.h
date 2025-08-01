@@ -20,5 +20,6 @@ class BaseApp {
         
         bool continuousRender = false; 
         unsigned long renderPeriod = 1000;
-        void sleep();        
+        void sleep();      
+        void drawScreen();  
 };

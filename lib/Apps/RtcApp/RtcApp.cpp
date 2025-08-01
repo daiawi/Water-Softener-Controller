@@ -39,10 +39,6 @@ void RtcApp::processDatePress(){
 }
 
 void RtcApp::processDateRender(){
-    display.clearDisplay();
-    display.setTextSize(1);    // Larger text size for time
-    display.setTextColor(SSD1306_WHITE);
-    display.setCursor(0, 0);  // Set cursor position for time
     display.print("Date Input:");
 
     // Print Countdown
@@ -53,9 +49,6 @@ void RtcApp::processDateRender(){
     sprintf(DateString, "%02d/%02d/%02d", inputDateTime.month(), inputDateTime.day(), inputDateTime.year()-2000);
 
     display.print(DateString);
-
-    // Update the display
-    display.display();
 }
 
 void RtcApp::processTimePress(){
@@ -67,10 +60,6 @@ void RtcApp::processTimePress(){
 }
 
 void RtcApp::processTimeRender(){
-    display.clearDisplay();
-    display.setTextSize(1);    // Larger text size for time
-    display.setTextColor(SSD1306_WHITE);
-    display.setCursor(0, 0);  // Set cursor position for time
     display.print("Time Input:");
 
     // Print Countdown
@@ -81,9 +70,6 @@ void RtcApp::processTimeRender(){
     sprintf(timeString, "%02d:%02d:%02d", inputDateTime.hour(), inputDateTime.minute(), inputDateTime.second());
 
     display.print(timeString);
-
-    // Update the display
-    display.display();
 }
 
 

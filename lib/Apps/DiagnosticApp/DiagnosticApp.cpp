@@ -11,10 +11,6 @@ void DiagnosticApp::init(){
 }
 
 void DiagnosticApp::render() {
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setCursor(0, 0);  // Set cursor position for time
-    
     // Get Current Time
     DateTime clock = rtc.now();
 
@@ -37,9 +33,6 @@ void DiagnosticApp::render() {
     display.print("Switch: ");
     const char* switch_status = digitalRead(pinGear) ? "Open" : "Closed";
     display.println(switch_status);
-
-    // Update the display
-    display.display();
 }
 
 void DiagnosticApp::onRotate(int dir){

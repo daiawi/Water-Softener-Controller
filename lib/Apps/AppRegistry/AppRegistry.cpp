@@ -29,7 +29,7 @@ void AppRegistry::update(bool pressed, int dir) {
     if (currentApp->continuousRender) {
         unsigned long now = millis();
         if (now - lastRenderTime >= currentApp->renderPeriod) {
-            currentApp->render();
+            currentApp->drawScreen();
             lastRenderTime = now;
             return;
         }
@@ -37,6 +37,6 @@ void AppRegistry::update(bool pressed, int dir) {
 
     // Render if user input changed something
     if (changed) {
-        currentApp->render();
+        currentApp->drawScreen();
     }
 }

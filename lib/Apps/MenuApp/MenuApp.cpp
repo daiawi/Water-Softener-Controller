@@ -22,10 +22,6 @@ void MenuApp::render() {
     constexpr int itemsPerPage = 3;
     constexpr int lineHeight = 10;
     constexpr uint8_t downArrowChar = 25;
-
-    display.clearDisplay();
-    display.setTextSize(1);  // Normal 1:1 pixel scale
-    display.setTextColor(SSD1306_WHITE);
      
     // Calculate start index for rendering based on the current selection
     int startIndex = (currentSelection / itemsPerPage) * itemsPerPage;
@@ -53,8 +49,6 @@ void MenuApp::render() {
         display.setCursor(120, 22); // Set cursor to the bottom-right position
         display.write(downArrowChar);  // Decimal code for the down arrow
     }
-
-    display.display();  // Display the updated menu
 }
 
 void MenuApp::onRotate(int dir){
