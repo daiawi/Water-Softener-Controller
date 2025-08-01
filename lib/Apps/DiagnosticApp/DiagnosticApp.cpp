@@ -1,6 +1,7 @@
 #include "AppRegistry.h"
 #include "DiagnosticApp.h"
 #include "RTClib.h"
+#include "timeUtils.h"
 
 extern AppRegistry AppHub;
 extern Error errorStatus;
@@ -15,8 +16,8 @@ void DiagnosticApp::render() {
     DateTime clock = rtc.now();
 
     // Display RTC Time
-    char timeString[9]; 
-    sprintf(timeString, "%02d:%02d:%02d", clock.hour(), clock.minute(), clock.second());
+    char timeString[8]; 
+    formatTime(clock, timeString);
     display.print("Time: ");
     display.println(timeString);
 

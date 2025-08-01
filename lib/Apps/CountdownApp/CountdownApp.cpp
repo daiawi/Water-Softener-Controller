@@ -1,6 +1,7 @@
 #include "AppRegistry.h"
 #include "CountdownApp.h"
 #include "WaterSoftener.h"
+#include "timeUtils.h"
 
 extern AppRegistry AppHub;
 extern Error errorStatus;
@@ -33,13 +34,7 @@ void CountdownApp::showCountdown(){
     display.setTextSize(2);    // Larger text size for time
     
     char timeString[15]; 
-    if (countdown.days()!=0){
-        sprintf(timeString, "%02d Days", countdown.days());
-    }
-    else{
-        // Format the time as HH:MM:SS
-        sprintf(timeString, "%02d:%02d:%02d", countdown.hours(), countdown.minutes(), countdown.seconds());
-    }
+    formatTime(countdown, timeString);
     
     display.print(timeString);
 }

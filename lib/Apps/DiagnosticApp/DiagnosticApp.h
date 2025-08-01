@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseApp.h"
+#include "RTClib.h"
 
 class DiagnosticApp : public BaseApp{
     public:
