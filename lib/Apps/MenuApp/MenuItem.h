@@ -1,5 +1,4 @@
-#ifndef MENUITEM_H
-#define MENUITEM_H
+#pragma once
 
 class Menu;
 
@@ -30,4 +29,3 @@ private:
     int subMenuCount;           // Number of items in the sub-menu
 };
 
-#endif
