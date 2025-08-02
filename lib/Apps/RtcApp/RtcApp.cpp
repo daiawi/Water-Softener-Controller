@@ -1,6 +1,6 @@
 #include "AppRegistry.h"
 #include "RtcApp.h"
-#include "timeUtils.h";
+#include "timeUtils.h"
 
 extern AppRegistry AppHub;
 extern Error errorStatus;
@@ -46,7 +46,7 @@ void RtcApp::processDateRender(){
     display.setCursor(0, 10);  // Set cursor position for time
     display.setTextSize(2);    // Larger text size for time
 
-    char dateString[10]; 
+    char dateString[9]; 
     formatDate(inputDateTime, dateString);
     display.print(dateString);
 }
@@ -66,7 +66,7 @@ void RtcApp::processTimeRender(){
     display.setCursor(0, 10);  // Set cursor position for time
     display.setTextSize(2);    // Larger text size for time
 
-    char timeString[10]; 
+    char timeString[9]; 
     formatTime(inputDateTime, timeString);
     
     display.print(timeString);

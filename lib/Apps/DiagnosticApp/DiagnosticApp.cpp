@@ -16,7 +16,7 @@ void DiagnosticApp::render() {
     DateTime clock = rtc.now();
 
     // Display RTC Time
-    char timeString[8]; 
+    char timeString[9]; 
     formatTime(clock, timeString);
     display.print("Time: ");
     display.println(timeString);

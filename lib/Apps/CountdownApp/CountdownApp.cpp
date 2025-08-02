@@ -33,13 +33,14 @@ void CountdownApp::showCountdown(){
     display.setCursor(0, 10);  // Set cursor position for time
     display.setTextSize(2);    // Larger text size for time
     
-    char timeString[15]; 
+    char timeString[9]; 
     formatTime(countdown, timeString);
     
     display.print(timeString);
 }
 
 void CountdownApp::showError(){
+    display.setTextSize(2);    // Larger text size for time
     display.println("Error");
     display.println("Detected");
   

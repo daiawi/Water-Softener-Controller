@@ -29,10 +29,10 @@ void createDateString(uint8_t year, uint8_t month, uint8_t day, char* formattedD
     // Format as hh:mm
     formattedDate[0] = '0' + (month / 10);     // Tens place of hours
     formattedDate[1] = '0' + (month % 10);     // Ones place of hours
-    formattedDate[2] = ':';                    // Colon separator
+    formattedDate[2] = '/';                    // Colon separator
     formattedDate[3] = '0' + (day / 10);        // Tens place of minutes
     formattedDate[4] = '0' + (day % 10);        // Ones place of minutes
-    formattedDate[5] = ':';
+    formattedDate[5] = '/';
     formattedDate[6] = '0' + (year / 10);
     formattedDate[7] = '0' + (year % 10);
     formattedDate[8] = '\0';
