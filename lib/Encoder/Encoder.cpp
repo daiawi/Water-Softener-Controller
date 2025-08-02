@@ -4,10 +4,37 @@ Encoder* Encoder::_instance = nullptr;
 
 Encoder::Encoder(uint8_t pinDT, uint8_t pinCLK, uint8_t pinBTN)
     : _pinDT(pinDT), _pinCLK(pinCLK), _pinBTN(pinBTN),
-      _lastState(0), _direction(0), _rotated(false), _stateChangeCounter(0),
-      _buttonFlag(false)
+      _lastState(0), _direction(0), _rotated(false),
+      _stateChangeCounter(0), _buttonFlag(false), lastBtn(0)
 {
     _instance = this;
+}
+
+Encoder* Encoder::getInstance() {
+    return _instance;
+}
+
+PinMap Encoder::getPinMap(uint8_t pin) {
+    PinMap map;
+
+    if (pin >= 8 && pin <= 13) {         // PORTB
+        map.pinReg   = &PINB;
+        map.pcmskReg = &PCMSK0;
+        map.mask     = 1 << (pin - 8);
+        map.pcicrBit = PCIE0;
+    } else if (pin >= A0 && pin <= A5) { // PORTC
+        map.pinReg   = &PINC;
+        map.pcmskReg = &PCMSK1;
+        map.mask     = 1 << (pin - A0);
+        map.pcicrBit = PCIE1;
+    } else {                             // PORTD (D0–D7)
+        map.pinReg   = &PIND;
+        map.pcmskReg = &PCMSK2;
+        map.mask     = 1 << pin;
+        map.pcicrBit = PCIE2;
+    }
+
+    return map;
 }
 
 void Encoder::begin() {
@@ -15,15 +42,38 @@ void Encoder::begin() {
     pinMode(_pinCLK, INPUT_PULLUP);
     pinMode(_pinBTN, INPUT_PULLUP);
 
-    _lastState = (digitalRead(_pinDT) << 1) | digitalRead(_pinCLK);
+    _dtMap  = getPinMap(_pinDT);
+    _clkMap = getPinMap(_pinCLK);
 
-    attachPCINT(digitalPinToPCINT(_pinDT), Encoder::handleInterrupt, CHANGE);
-    attachPCINT(digitalPinToPCINT(_pinCLK), Encoder::handleInterrupt, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(_pinBTN), Encoder::handleButtonInterrupt, FALLING);
+    // Enable PCINT groups and pins
+    PCICR |= (1 << _dtMap.pcicrBit);
+    *_dtMap.pcmskReg |= _dtMap.mask;
+
+    if (_clkMap.pcicrBit != _dtMap.pcicrBit) {
+        PCICR |= (1 << _clkMap.pcicrBit);
+    }
+    *_clkMap.pcmskReg |= _clkMap.mask;
+
+    // Setup external interrupt for button if on D2 (INT0)
+    if (_pinBTN == 2) {
+        EICRA |= _BV(ISC01); // Falling edge triggers
+        EIMSK |= _BV(INT0);
+    } else {
+        // If button on PCINT pin, enable that pin interrupt
+        PinMap btnMap = getPinMap(_pinBTN);
+        PCICR |= (1 << btnMap.pcicrBit);
+        *btnMap.pcmskReg |= btnMap.mask;
+    }
+
+    _lastState =
+        ((*_dtMap.pinReg & _dtMap.mask) ? 2 : 0) |
+        ((*_clkMap.pinReg & _clkMap.mask) ? 1 : 0);
 }
 
 void Encoder::updateEncoder() {
-    uint8_t currentState = (digitalRead(_pinDT) << 1) | digitalRead(_pinCLK);
+    uint8_t currentState =
+        ((*_dtMap.pinReg & _dtMap.mask) ? 2 : 0) |
+        ((*_clkMap.pinReg & _clkMap.mask) ? 1 : 0);
 
     if (currentState != _lastState) {
         _stateChangeCounter++;
@@ -39,9 +89,9 @@ void Encoder::updateEncoder() {
     _lastState = currentState;
 }
 
-void Encoder::updateButton() { 
+void Encoder::updateButton() {
     unsigned long now = millis();
-    if (now - lastBtn > 250){
+    if (now - lastBtn > 250) {
         _buttonFlag = true;
         lastBtn = now;
     }
@@ -63,12 +113,20 @@ bool Encoder::readButton() {
     return false;
 }
 
-// Static ISR for rotation
-void Encoder::handleInterrupt() {
-    if (_instance) _instance->updateEncoder();
+// Global ISR functions
+
+ISR(PCINT0_vect) {
+    if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
 }
 
-// Static ISR for button
-void Encoder::handleButtonInterrupt() {
-    if (_instance) _instance->updateButton();
+ISR(PCINT1_vect) {
+    if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
+}
+
+ISR(PCINT2_vect) {
+    if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
+}
+
+ISR(INT0_vect) {
+    if (Encoder::getInstance()) Encoder::getInstance()->updateButton();
 }
