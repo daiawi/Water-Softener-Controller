@@ -1,8 +1,11 @@
 #include "BaseApp.h"
 
+void BaseApp::wake(){
+    display.ssd1306_command(SSD1306_DISPLAYON);
+}
+
 void BaseApp::sleep(){
-    display.clearDisplay();
-    display.display();
+    display.ssd1306_command(SSD1306_DISPLAYOFF);
 }
 
 void BaseApp::drawScreen(){

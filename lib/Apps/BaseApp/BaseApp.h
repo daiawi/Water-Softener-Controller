@@ -13,13 +13,16 @@ class BaseApp {
         : display(disp), programData(state) {}
         
         virtual void init() {}                                  // Optional setup
-        virtual void render() = 0;                              // Required
-        virtual void onRotate(int dir) = 0;                     // Required
-        virtual void onPress() = 0;                             // Required
+        void drawScreen();                                      // Forwards to Render and Sets Defaults
+        virtual void onRotate(int dir) = 0;                     // Required Input Function
+        virtual void onPress() = 0;                             // Required Input Function
         virtual ~BaseApp() {}                                   // Ensure proper cleanup
         
         bool continuousRender = false; 
         unsigned long renderPeriod = 1000;
+        void wake();
         void sleep();      
-        void drawScreen();  
+         
+    private:
+        virtual void render() = 0;                              // Required
 };

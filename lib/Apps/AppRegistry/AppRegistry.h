@@ -18,7 +18,7 @@ class AppRegistry{
     // Timing
     private:
         bool isSleeping = false;
-        unsigned long sleep_time = 3000;
+        unsigned long sleep_time = 25000;
         unsigned long lastInteraction = 0;
         unsigned long lastRenderTime = 0;
 };

@@ -14,29 +14,39 @@ void AppRegistry::returnToMenu(){
 }
 
 void AppRegistry::update(bool pressed, int dir) {
-    bool changed = false;
+    // Handle User Input First
+    if (pressed || dir != 0) {
+        lastInteraction = millis();
 
-    // Handle input events
-    if (pressed) {
-        currentApp->onPress();
-        changed = true;
-    } else if (dir) {
-        currentApp->onRotate(dir);
-        changed = true;
-    }
-
-    // Check continuous render
-    if (currentApp->continuousRender) {
-        unsigned long now = millis();
-        if (now - lastRenderTime >= currentApp->renderPeriod) {
+        if (isSleeping) {
+            isSleeping = false;
+            currentApp->wake();
             currentApp->drawScreen();
-            lastRenderTime = now;
             return;
         }
+
+        if (pressed) currentApp->onPress();
+        else currentApp->onRotate(dir);
+
+        currentApp->drawScreen();
+        return;
     }
 
-    // Render if user input changed something
-    if (changed) {
-        currentApp->drawScreen();
+    // Check for Sleep Condition
+    if (!isSleeping && (millis() - lastInteraction >= sleep_time)) {
+        isSleeping = true;
+        swapTo(countdownApp);
+        currentApp->sleep();
+        return;
+    }
+
+    // Check for Continous Render
+    if (!isSleeping && currentApp->continuousRender) {
+        unsigned long now = millis();
+        if (now - lastRenderTime >= currentApp->renderPeriod) {
+            lastRenderTime = now;
+            currentApp->drawScreen();
+        }
     }
 }
+
