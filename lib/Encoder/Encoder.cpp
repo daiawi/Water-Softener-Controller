@@ -114,19 +114,39 @@ bool Encoder::readButton() {
 }
 
 // Global ISR functions
-
+#define ISR_DEBOUNCE 1000
+volatile unsigned long lastPCINT0;
 ISR(PCINT0_vect) {
-    if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
+    unsigned long now = micros();
+    if (now - lastPCINT0 > ISR_DEBOUNCE){
+        if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
+        lastPCINT0 = now;
+    }
 }
 
+volatile unsigned long lastPCINT1;
 ISR(PCINT1_vect) {
-    if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
+    unsigned long now = micros();
+    if (now - lastPCINT1 > ISR_DEBOUNCE){
+        if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
+        lastPCINT1 = now;
+    }
 }
 
+volatile unsigned long lastPCINT2;
 ISR(PCINT2_vect) {
-    if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
+    unsigned long now = micros();
+    if (now - lastPCINT2 > ISR_DEBOUNCE){
+        if (Encoder::getInstance()) Encoder::getInstance()->updateEncoder();
+        lastPCINT2 = now;
+    }
 }
 
+volatile unsigned long lastINT0;
 ISR(INT0_vect) {
-    if (Encoder::getInstance()) Encoder::getInstance()->updateButton();
+    unsigned long now = micros();
+    if (now - lastINT0 > ISR_DEBOUNCE){
+        if (Encoder::getInstance()) Encoder::getInstance()->updateButton();
+        lastINT0 = now;
+    }
 }
